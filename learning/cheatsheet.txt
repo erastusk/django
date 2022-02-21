@@ -59,7 +59,8 @@ ORM, database interaction
 https://docs.djangoproject.com/en/4.0/topics/db/queries/
     - python manage.py shell
     - import model - from <app name>.<models> import <class model>
-        - eg from articles.models import Article
+        - eg from importlib.metadata import files
+from articles.models import Article
     - If errors occur with the new model, run python manage.py migrate --run-syncdb
     - Article.objects.all()
     - Article.objects.all().order_by('date')
@@ -76,4 +77,27 @@ Static Files, css, images etc.
 - Production preffered location should be a cloud, AWS-S3
 - locally , in root project urls.py from django.contrib.staticfiles.urls import staticfiles_urlpatterns
     This checks if we're running in debug mode(local) to know how to serve up static files.
-- in settings.py, STATIC_URL setting ('/static') tells django the locaton of static files    
+- in settings.py, STATIC_URL setting ('/static'), is the location you HAVE TO include in the url to get to static files
+    its NOT the path to the static files
+    
+- STATICFILES_DIRS = os.path.join(BASE_DIR, 'assets') in settings.py is the actual location of static files, so you'll need to create a assets directory under the base dir.    
+
+Named URL Parameters
+- From a main page, click on a link and go to the individual page. How would that link know where to go? In our example here, when an article is added there's a slugfield or id
+    that's passed. So this field can be used to retrieve a specific article. 
+
+How it works:
+user clicks on link with a id associate with it -> main urls.py captures base url -> sends to app urls.py -> views function (request, id) -> query slug in db
+-> Render db query results to user -> user. Regex that captures your id depends on how you configured it eg url(r'^?P<slug>)  
+    urls.py -> path('<int:id>', views.article_id, name="article_id")
+    views.py -> def article_id (request, id):
+<h1><a href="{% url 'article_id' id=article.id %}">{{ article.title }}</a></h1> 
+- In Django instead of hardcording a view to use, url for is used , followed by the view function name
+- Remember the  main landing page displays a list of all articles queried from the db with an id, This is always available. So when the a tag
+    is clicked on it will send back the request with the id, that can be queried and individual article sent back above.
+
+Upload media
+As static files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
