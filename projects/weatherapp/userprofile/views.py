@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 import requests
 
-url = "https://api.openweathermap.org/data/2.5/weather?q={city_name}&units=imperial&appid=abf5cde6ff725334c4c2dab475a4ba51"
+url = "https://api.openweathermap.org/data/2.5/weather?q={city_name}&units=imperial&appid=XXXXXXXXXXXXXXXXXXXXXXXXX"
 
 def profile(request, id):    
     profile_cities_list = db.objects.filter(user_id=id)     
