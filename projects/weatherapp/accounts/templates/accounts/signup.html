@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block nav %}
+<a class="nav-link" href="{% url 'accounts:signup' %}">Sign Up</a>
+<a class="nav-link" href="{% url 'accounts:signin' %}">Sign In</a>
+{% endblock nav %}  
+{% block showcase %}
+    <div class="container text-center  pt-5">   
+        <div class="h1">Sign Up</div>   
+      <div class="container-signup bg-white">  
+          <form method="POST" action="{% url 'accounts:signup' %}"> 
+            {% csrf_token %}           
+            <fieldset class="form-group">                
+                {{form.as_table}}
+            </fieldset>
+            <input type="submit" value="Signup">           
+        </form>
+        <div class="text-muted pt-2">Already have an account? <a href="{% url 'accounts:signin' %}">Sign In</a></div>
+    </div>
+    </div>  
+ {% endblock showcase %}

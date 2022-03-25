@@ -80,8 +80,8 @@ Static Files, css, images etc.
 - in settings.py, STATIC_URL setting ('/static'), is the location you HAVE TO include in the url to get to static files
     its NOT the path to the static files
     
-- STATICFILES_DIRS = os.path.join(BASE_DIR, 'assets') in settings.py is the actual location of static files, so you'll need to create a assets directory under the base dir.    
-
+- STATICFILES_DIRS = os.path.join(BASE_DIR, 'assets') in settings.py is the actual location of static files, so you'll need to create a assets directory under the base dir(where manage.py resides).    
+urlpatterns += staticfiles_urlpatterns() - in urls.py, this is where your appending the main app + static location to serve them up.
 Named URL Parameters
 - From a main page, click on a link and go to the individual page. How would that link know where to go? In our example here, when an article is added there's a slugfield or id
     that's passed. So this field can be used to retrieve a specific article. 
@@ -99,5 +99,7 @@ user clicks on link with a id associate with it -> main urls.py captures base ur
 Upload media
 As static files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') where files are stored
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+Add thumbnail field
 
